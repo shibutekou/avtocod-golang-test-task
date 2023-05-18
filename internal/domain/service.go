@@ -1,17 +1,21 @@
 package domain
 
-import "app/internal/model"
+import (
+    "app/internal/model"
+    "app/internal/repository"
+    "net/http"
+)
 
 type Service struct {
-    parking parkingService
+    Parking parkingService
 }
 
 type parkingService interface {
-    ByGlobalID(globalID int64) (model.Cells, error)
-    ByMode(mode string) (model.Cells, error)
+    ByGlobalID(globalID int) (model.TaxiParking, error)
+    ByMode(mode string) (model.TaxiParking, error)
 }
 
-func NewService() *Service {
-    parkingServiceImpl := NewParkingService()
-    return &Service{parking: parkingServiceImpl}
+func NewService(token string, client http.Client, redisRepo *repository.RedisRepository) *Service {
+    parkingServiceImpl := NewParkingService(token, client, redisRepo)
+    return &Service{Parking: parkingServiceImpl}
 }

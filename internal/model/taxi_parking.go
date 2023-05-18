@@ -1,24 +1,22 @@
 package model
 
-type TaxiParking struct {
-    GlobalID int64  `json:"global_id,omitempty"`
-    Number   uint32 `json:"number,omitempty"`
-    Cells    Cells  `json:"cells"`
+type TaxiParkingItem struct {
+    GlobalId int `json:"global_id"`
+    Number   int `json:"Number"`
+    Cells    struct {
+        Name                string `json:"Name"`
+        GlobalId            int    `json:"global_id"`
+        AdmArea             string `json:"AdmArea"`
+        District            string `json:"District"`
+        Address             string `json:"Address"`
+        LocationDescription string `json:"LocationDescription"`
+        CarCapacity         int    `json:"CarCapacity"`
+        Mode                string `json:"Mode"`
+        GeoData             struct {
+            Coordinates []float64 `json:"coordinates"`
+            Type        string    `json:"type"`
+        } `json:"geoData"`
+    } `json:"Cells"`
 }
 
-type Cells struct {
-    Name                string  `json:"name,omitempty"`
-    GlobalID            int64   `json:"global_id,omitempty"`
-    AdmArea             string  `json:"adm_area,omitempty"`
-    District            string  `json:"district,omitempty"`
-    Address             string  `json:"address,omitempty"`
-    LocationDescription string  `json:"location_description,omitempty"`
-    CarCapacity         uint32  `json:"car_capacity,omitempty"`
-    Mode                string  `json:"mode,omitempty"`
-    GeoData             GeoData `json:"geo_data"`
-}
-
-type GeoData struct {
-    Coordinates []float64 `json:"coordinates,omitempty"`
-    Type        string    `json:"type,omitempty"`
-}
+type TaxiParking []TaxiParkingItem
